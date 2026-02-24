@@ -637,6 +637,7 @@ export const FIELD_LABELS: Record<string, string> = {
   "channels.whatsapp.selfChatMode": "WhatsApp Self-Phone Mode",
   "channels.whatsapp.debounceMs": "WhatsApp Message Debounce (ms)",
   "channels.whatsapp.configWrites": "WhatsApp Config Writes",
+  "channels.whatsapp.proxy": "WhatsApp 代理 (Proxy)",
   "channels.signal.dmPolicy": "Signal DM Policy",
   "channels.signal.configWrites": "Signal Config Writes",
   "channels.imessage.dmPolicy": "iMessage DM Policy",

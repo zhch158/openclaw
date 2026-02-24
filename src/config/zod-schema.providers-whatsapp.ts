@@ -56,6 +56,8 @@ const WhatsAppSharedSchema = z.object({
   ackReaction: WhatsAppAckReactionSchema,
   debounceMs: z.number().int().nonnegative().optional().default(0),
   heartbeat: ChannelHeartbeatVisibilitySchema,
+  /** HTTP/HTTPS/SOCKS5 代理 URL，用于 Baileys 连接 web.whatsapp.com，如 http://127.0.0.1:7890 或 socks5://127.0.0.1:1080 */
+  proxy: z.string().trim().min(1).optional(),
 });
 
 function enforceOpenDmPolicyAllowFromStar(params: {

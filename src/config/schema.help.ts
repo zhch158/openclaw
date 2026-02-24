@@ -1324,6 +1324,8 @@ export const FIELD_HELP: Record<string, string> = {
   "channels.whatsapp.selfChatMode": "Same-phone setup (bot uses your personal WhatsApp number).",
   "channels.whatsapp.debounceMs":
     "Debounce window (ms) for batching rapid consecutive messages from the same sender (0 to disable).",
+  "channels.whatsapp.proxy":
+    "HTTP/HTTPS/SOCKS5 代理 URL，强制 Baileys 通过代理连接 web.whatsapp.com（如 http://127.0.0.1:7890 或 socks5://127.0.0.1:7891）。",
   "channels.signal.dmPolicy":
     'Direct message access control ("pairing" recommended). "open" requires channels.signal.allowFrom=["*"].',
   "channels.imessage.dmPolicy":

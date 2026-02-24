@@ -78,6 +78,8 @@ type WhatsAppSharedConfig = {
   debounceMs?: number;
   /** Heartbeat visibility settings. */
   heartbeat?: ChannelHeartbeatVisibilityConfig;
+  /** HTTP/HTTPS/SOCKS5 代理 URL，用于 Baileys 连接 web.whatsapp.com */
+  proxy?: string;
 };
 
 type WhatsAppConfigCore = {
@@ -93,6 +95,37 @@ type WhatsAppConfigCore = {
   messagePrefix?: string;
   /** Outbound response prefix override. */
   responsePrefix?: string;
+  /** Override auth directory (Baileys multi-file auth state). */
+  authDir?: string;
+  /** Direct message access policy (default: pairing). */
+  dmPolicy?: DmPolicy;
+  /** Same-phone setup for this account (bot uses your personal WhatsApp number). */
+  selfChatMode?: boolean;
+  allowFrom?: string[];
+  groupAllowFrom?: string[];
+  groupPolicy?: GroupPolicy;
+  /** Max group messages to keep as history context (0 disables). */
+  historyLimit?: number;
+  /** Max DM turns to keep as history context. */
+  dmHistoryLimit?: number;
+  /** Per-DM config overrides keyed by user ID. */
+  dms?: Record<string, DmConfig>;
+  textChunkLimit?: number;
+  /** Chunking mode: "length" (default) splits by size; "newline" splits on every newline. */
+  chunkMode?: "length" | "newline";
+  mediaMaxMb?: number;
+  blockStreaming?: boolean;
+  /** Merge streamed block replies before sending. */
+  blockStreamingCoalesce?: BlockStreamingCoalesceConfig;
+  groups?: Record<string, WhatsAppGroupConfig>;
+  /** Acknowledgment reaction sent immediately upon message receipt. */
+  ackReaction?: WhatsAppAckReactionConfig;
+  /** Debounce window (ms) for batching rapid consecutive messages from the same sender (0 to disable). */
+  debounceMs?: number;
+  /** Heartbeat visibility settings for this account. */
+  heartbeat?: ChannelHeartbeatVisibilityConfig;
+  /** HTTP/HTTPS/SOCKS5 代理 URL，用于 Baileys 连接 web.whatsapp.com */
+  proxy?: string;
 };
 
 export type WhatsAppConfig = WhatsAppConfigCore &

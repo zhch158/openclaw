@@ -34,11 +34,14 @@ export async function monitorWebInbox(options: {
   debounceMs?: number;
   /** Optional debounce gating predicate. */
   shouldDebounce?: (msg: WebInboundMessage) => boolean;
+  /** HTTP/HTTPS/SOCKS5 代理 URL，用于 Baileys 连接 web.whatsapp.com */
+  proxy?: string;
 }) {
   const inboundLogger = getChildLogger({ module: "web-inbound" });
   const inboundConsoleLog = createSubsystemLogger("gateway/channels/whatsapp").child("inbound");
   const sock = await createWaSocket(false, options.verbose, {
     authDir: options.authDir,
+    proxy: options.proxy,
   });
   await waitForWaConnection(sock);
   const connectedAtMs = Date.now();

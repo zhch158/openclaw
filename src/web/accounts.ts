@@ -29,6 +29,8 @@ export type ResolvedWhatsAppAccount = {
   ackReaction?: WhatsAppAccountConfig["ackReaction"];
   groups?: WhatsAppAccountConfig["groups"];
   debounceMs?: number;
+  /** HTTP/HTTPS/SOCKS5 代理 URL，用于 Baileys 连接 web.whatsapp.com */
+  proxy?: string;
 };
 
 const { listConfiguredAccountIds, listAccountIds, resolveDefaultAccountId } =
@@ -144,6 +146,7 @@ export function resolveWhatsAppAccount(params: {
     ackReaction: accountCfg?.ackReaction ?? rootCfg?.ackReaction,
     groups: accountCfg?.groups ?? rootCfg?.groups,
     debounceMs: accountCfg?.debounceMs ?? rootCfg?.debounceMs,
+    proxy: accountCfg?.proxy ?? rootCfg?.proxy,
   };
 }
 

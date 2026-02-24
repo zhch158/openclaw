@@ -7,7 +7,9 @@ import {
   makeWASocket,
   useMultiFileAuthState,
 } from "@whiskeysockets/baileys";
+import { HttpsProxyAgent } from "https-proxy-agent";
 import qrcode from "qrcode-terminal";
+import { SocksProxyAgent } from "socks-proxy-agent";
 import { formatCliCommand } from "../cli/command-format.js";
 import { danger, success } from "../globals.js";
 import { getChildLogger, toPinoLikeLogger } from "../logging.js";
@@ -83,6 +85,14 @@ async function safeSaveCreds(
   }
 }
 
+function createProxyAgent(proxy: string): HttpsProxyAgent<string> | SocksProxyAgent {
+  const url = proxy.toLowerCase();
+  if (url.startsWith("socks")) {
+    return new SocksProxyAgent(proxy);
+  }
+  return new HttpsProxyAgent(proxy);
+}
+
 /**
  * Create a Baileys socket backed by the multi-file auth store we keep on disk.
  * Consumers can opt into QR printing for interactive login flows.
@@ -90,7 +100,7 @@ async function safeSaveCreds(
 export async function createWaSocket(
   printQr: boolean,
   verbose: boolean,
-  opts: { authDir?: string; onQr?: (qr: string) => void } = {},
+  opts: { authDir?: string; onQr?: (qr: string) => void; proxy?: string } = {},
 ): Promise<ReturnType<typeof makeWASocket>> {
   const baseLogger = getChildLogger(
     { module: "baileys" },
@@ -105,6 +115,21 @@ export async function createWaSocket(
   maybeRestoreCredsFromBackup(authDir);
   const { state, saveCreds } = await useMultiFileAuthState(authDir);
   const { version } = await fetchLatestBaileysVersion();
+
+  const proxyOptions: {
+    agent?: HttpsProxyAgent<string> | SocksProxyAgent;
+    fetchAgent?: HttpsProxyAgent<string> | SocksProxyAgent;
+  } = {};
+  if (opts.proxy && opts.proxy.trim().length > 0) {
+    const agent = createProxyAgent(opts.proxy.trim());
+    proxyOptions.agent = agent;
+    proxyOptions.fetchAgent = agent;
+    if (verbose) {
+      const safe = opts.proxy.replace(/:([^:@]+)@/, ":****@");
+      sessionLogger.info({ proxy: safe }, "Using proxy for WhatsApp Web connection");
+    }
+  }
+
   const sock = makeWASocket({
     auth: {
       creds: state.creds,
@@ -116,6 +141,7 @@ export async function createWaSocket(
     browser: ["openclaw", "cli", VERSION],
     syncFullHistory: false,
     markOnlineOnConnect: false,
+    ...proxyOptions,
   });
 
   sock.ev.on("creds.update", () => enqueueSaveCreds(authDir, saveCreds, sessionLogger));
