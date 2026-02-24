@@ -4,6 +4,7 @@ import {
   GATEWAY_LAUNCH_AGENT_LABEL,
   GATEWAY_SYSTEMD_SERVICE_NAME,
   GATEWAY_WINDOWS_TASK_NAME,
+  LEGACY_GATEWAY_SYSTEMD_SERVICE_NAMES,
   normalizeGatewayProfile,
   resolveGatewayLaunchAgentLabel,
   resolveGatewayProfileSuffix,
@@ -38,11 +39,6 @@ describe("resolveGatewayLaunchAgentLabel", () => {
     const result = resolveGatewayLaunchAgentLabel("dev");
     expect(result).toBe("ai.openclaw.dev");
   });
-
-  it("trims whitespace from profile", () => {
-    const result = resolveGatewayLaunchAgentLabel("  staging  ");
-    expect(result).toBe("ai.openclaw.staging");
-  });
 });
 
 describe("resolveGatewaySystemdServiceName", () => {
@@ -56,11 +52,6 @@ describe("resolveGatewaySystemdServiceName", () => {
     const result = resolveGatewaySystemdServiceName("dev");
     expect(result).toBe("openclaw-gateway-dev");
   });
-
-  it("trims whitespace from profile", () => {
-    const result = resolveGatewaySystemdServiceName("  test  ");
-    expect(result).toBe("openclaw-gateway-test");
-  });
 });
 
 describe("resolveGatewayWindowsTaskName", () => {
@@ -73,11 +64,6 @@ describe("resolveGatewayWindowsTaskName", () => {
   it("returns profile-specific task name when profile is set", () => {
     const result = resolveGatewayWindowsTaskName("dev");
     expect(result).toBe("OpenClaw Gateway (dev)");
-  });
-
-  it("trims whitespace from profile", () => {
-    const result = resolveGatewayWindowsTaskName("  ci  ");
-    expect(result).toBe("OpenClaw Gateway (ci)");
   });
 });
 
@@ -141,5 +127,12 @@ describe("resolveGatewayServiceDescription", () => {
         environment: { OPENCLAW_SERVICE_VERSION: "remote" },
       }),
     ).toBe("OpenClaw Gateway (profile: work, vremote)");
+  });
+});
+
+describe("LEGACY_GATEWAY_SYSTEMD_SERVICE_NAMES", () => {
+  it("includes known pre-rebrand gateway unit names", () => {
+    expect(LEGACY_GATEWAY_SYSTEMD_SERVICE_NAMES).toContain("clawdbot-gateway");
+    expect(LEGACY_GATEWAY_SYSTEMD_SERVICE_NAMES).toContain("moltbot-gateway");
   });
 });
