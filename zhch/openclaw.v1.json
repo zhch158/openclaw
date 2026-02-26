@@ -1,0 +1,174 @@
+{
+  "meta": {
+    "lastTouchedVersion": "2026.2.14",
+    "lastTouchedAt": "2026-02-15T07:40:14.703Z"
+  },
+  "wizard": {
+    "lastRunAt": "2026-02-15T07:40:14.686Z",
+    "lastRunVersion": "2026.2.14",
+    "lastRunCommand": "onboard",
+    "lastRunMode": "local"
+  },
+  "diagnostics": {
+    "enabled": true
+  },
+  "update": {
+    "channel": "stable",
+    "checkOnStart": true
+  },
+  "auth": {
+    "profiles": {
+      "github-copilot:github": {
+        "provider": "github-copilot",
+        "mode": "token"
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "github-copilot/gpt-4o"
+      },
+      "workspace": "/Users/zhch158/.openclaw/workspace",
+      "compaction": {
+        "mode": "safeguard"
+      },
+      "maxConcurrent": 4,
+      "subagents": {
+        "maxConcurrent": 8
+      }
+    }
+  },
+  "tools": {
+    "web": {
+      "search": {
+        "enabled": true,
+        "apiKey": "BSAYGN9yYDX0aUv-iQAFaEDk4p0dKR1"
+      },
+      "fetch": {
+        "enabled": true
+      }
+    }
+  },
+  "messages": {
+    "queue": {
+      "byChannel": {
+        "whatsapp": "steer"
+      }
+    },
+    "ackReactionScope": "group-mentions"
+  },
+  "commands": {
+    "native": "auto",
+    "nativeSkills": "auto"
+  },
+  "hooks": {
+    "internal": {
+      "enabled": true,
+      "entries": {
+        "session-memory": {
+          "enabled": true
+        },
+        "boot-md": {
+          "enabled": true
+        },
+        "command-logger": {
+          "enabled": true
+        }
+      }
+    }
+  },
+  "channels": {
+    "whatsapp": {
+      "dmPolicy": "allowlist",
+      "selfChatMode": true,
+      "allowFrom": ["+8618510163158"],
+      "groupPolicy": "allowlist",
+      "debounceMs": 0,
+      "mediaMaxMb": 50
+    },
+    "feishu": {
+      "enabled": true,
+      "appId": "cli_a905a49be378dbd8",
+      "appSecret": "xLy1FVeQjQn7hNK6zgNrVcsFvBrTkura",
+      "domain": "feishu",
+      "connectionMode": "websocket",
+      "dmPolicy": "pairing",
+      "groupPolicy": "allowlist",
+      "requireMention": true,
+      "mediaMaxMb": 30,
+      "renderMode": "auto"
+    },
+    "wecom-app": {
+      "enabled": true,
+      "webhookPath": "/wecom/app",
+      "token": "NIA9QhW960",
+      "encodingAESKey": "ZLG81ET7Tj2kE6JtFPdT6GdXRmpuCYKhW7S4wT9pkHm",
+      "corpId": "ww096fe6089f239637",
+      "corpSecret": "Air4VRChNLf5G-K2FqbSrU6bUqnxmKUrZeGAw-QU1jI",
+      "agentId": "ww5b8f6308396670f5"
+    }
+  },
+  "gateway": {
+    "port": 18789,
+    "mode": "local",
+    "bind": "lan",
+    "controlUi": {
+      "allowedOrigins": ["https://dd94-137-175-77-5.ngrok-free.app"],
+      "allowInsecureAuth": true,
+      "dangerouslyDisableDeviceAuth": true
+    },
+    "auth": {
+      "mode": "token",
+      "token": "33b38af9091b29423857b38c29581e9ed70305ed6b9d43ff"
+    },
+    "trustedProxies": ["127.0.0.1", "::1", "::ffff:127.0.0.1"],
+    "tailscale": {
+      "mode": "off",
+      "resetOnExit": false
+    },
+    "nodes": {
+      "browser": {
+        "mode": "auto"
+      },
+      "allowCommands": [
+        "screen",
+        "canvas.present",
+        "canvas.hide",
+        "canvas.navigate",
+        "canvas.eval",
+        "canvas.snapshot"
+      ]
+    }
+  },
+  "skills": {
+    "install": {
+      "nodeManager": "npm"
+    }
+  },
+  "plugins": {
+    "entries": {
+      "whatsapp": {
+        "enabled": true
+      },
+      "google-antigravity-auth": {
+        "enabled": true
+      },
+      "wecom-app": {
+        "enabled": true
+      },
+      "feishu": {
+        "enabled": true
+      }
+    },
+    "installs": {
+      "wecom-app": {
+        "source": "npm",
+        "spec": "@openclaw-china/wecom-app",
+        "installPath": "/Users/zhch158/.openclaw/extensions/wecom-app",
+        "version": "0.1.7",
+        "installedAt": "2026-02-15T05:56:35.462Z"
+      }
+    }
+  }
+}
